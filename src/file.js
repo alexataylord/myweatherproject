@@ -52,13 +52,22 @@ function refreshWeather(response) {
         searchCity(searchInput.value);
       }
 
-      function displayForecast() {
-             let forecast = document.querySelector("#forecast");
+      function getForecast(city) {
+        let apiKey = "45378823524b7c076fde8t64aafb9ofd";
+        let apiUrl = "https://api.shecodes.io/weather/v1/forecast?query=${city}&key=45378823524b7c076fde8t64aafb9ofd&units=metric";
+   axios(apiUrl).then(displayForecast);
+    }
 
+      function displayForecast(response) {
+             console.log(response.data);
+             
              let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+             let forecastHtml = "";
 
-             days.forEach(function(day) {
-                 forecast.innerHTML = `
+             days.forEach(function (day) {
+                forecastHtml =
+                forecastHtml +
+                  `
       <div class="weather-forecast-day">
       <div class="weather-forecast-date">${day}</div>
       <div class="weather-forecast-icon">🌧️</div>
@@ -72,14 +81,15 @@ function refreshWeather(response) {
       `;
 
              });
-
-     
+let forecastElement = document.querySelector("#forecast");
+     forecastElement.innerHTML = forecastHtml;
       }
 
       let searchFormElement = document.querySelector("#search-form");
       searchFormElement.addEventListener("submit", handleSearchSubmit);
 
       searchCity("Gold Coast");
-      displayForecast();
+      getForecast("Gold Coast");
+      
 
  
